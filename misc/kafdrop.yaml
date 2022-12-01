@@ -1,0 +1,21 @@
+services:
+  kafdrop_svc:
+    image: obsidiandynamics/kafdrop:3.30.0
+    container_name: kafdrop_cntr
+    hostname: kafdrop_host
+    depends_on:
+    - zookeeper_svc
+    - kafka_svc
+    environment:
+      KAFKA_BROKERCONNECT: kafka_svc:29092
+      JVM_OPTS: "-Xms32M -Xmx64M"
+      SERVER_PORT: "9999"
+      SERVER_SERVLET_CONTEXTPATH: "/"
+    ports:
+      - "9999:9999"
+    networks:
+      - jojonomic-test-net
+
+networks:
+  jojonomic-test-net:
+    external: true
