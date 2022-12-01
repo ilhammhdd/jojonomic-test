@@ -1,0 +1,1 @@
+this repo is a technical test for Jojonomic Backend Go(Golang) position.
