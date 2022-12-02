@@ -1,0 +1,14 @@
+go 1.19
+
+use (
+	./buyback
+	./buyback_storage
+	./cek_harga
+	./cek_mutasi
+	./cek_saldo
+	./input_harga
+	./input_harga_storage
+	./misc_test
+	./model
+	./utils
+)

@@ -1,7 +1,7 @@
 package main
 
 import (
-	kafkazookeeper "github.com/ilhammhdd/jojonomic-test-misc-test/kafka_zookeeper"
+	kafkazookeeper "github.com/ilhammhdd/jojonomic_test/misc_test/kafka_zookeeper"
 )
 
 func main() {

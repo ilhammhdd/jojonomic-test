@@ -3,10 +3,13 @@ services:
     image: postgres:15.1-bullseye
     container_name: postgres_cntr
     hostname: postgres_host
+    restart: always
     environment:
       POSTGRES_USER: adminpostgres
       POSTGRES_PASSWORD: "87654321"
       POSTGRES_DB: jojonomic_test
+      TZ: UTC
+      PGTZ: UTC
     ports:
     - 5432:5432
     networks:

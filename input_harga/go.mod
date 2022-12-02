@@ -1,10 +1,21 @@
-module github.com/ilhammhdd/jojonomic_test/misc_test
+module github.com/ilhammhdd/jojonomic_test/input_harga
 
 go 1.19
 
-require github.com/Shopify/sarama v1.37.2
+require (
+	github.com/gorilla/mux v1.8.0
+	github.com/ilhammhdd/jojonomic_test/model v0.0.0-00010101000000-000000000000
+	github.com/ilhammhdd/jojonomic_test/utils v0.0.0-00010101000000-000000000000
+	github.com/joho/godotenv v1.4.0
+	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
+)
+
+replace github.com/ilhammhdd/jojonomic_test/model => ../model
+
+replace github.com/ilhammhdd/jojonomic_test/utils => ../utils
 
 require (
+	github.com/Shopify/sarama v1.37.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/eapache/go-resiliency v1.3.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect

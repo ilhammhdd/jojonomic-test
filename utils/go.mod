@@ -1,8 +1,11 @@
-module github.com/ilhammhdd/jojonomic_test/misc_test
+module github.com/ilhammhdd/jojonomic_test/utils
 
 go 1.19
 
-require github.com/Shopify/sarama v1.37.2
+require (
+	github.com/Shopify/sarama v1.37.2
+	github.com/teris-io/shortid v0.0.0-20220617161101-71ec9f2aa569
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
