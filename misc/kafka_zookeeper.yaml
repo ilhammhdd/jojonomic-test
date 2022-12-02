@@ -8,17 +8,17 @@ services:
       ZOOKEEPER_SERVER_ID: 1
       ZOOKEEPER_TICK_TIME: 2000
     ports:
-      - "2181:2181"
+    - "2181:2181"
     restart: always
     networks:
-      - jojonomic-test-net
+    - jojonomic-test-net
 
   kafka_svc:
     image: confluentinc/cp-kafka
     container_name: kafka_cntr
     hostname: kafka_host
     depends_on:
-      - zookeeper_svc
+    - zookeeper_svc
     environment:
       KAFKA_BROKER_ID: 1
       KAFKA_ZOOKEEPER_CONNECT: zookeeper_svc:2181
@@ -26,14 +26,11 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka_svc:29092,PLAINTEXT_HOST://localhost:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
-      - "29092:29092"
-      - "9092:9092"
+    - "29092:29092"
+    - "9092:9092"
     restart: always
     networks:
-      jojonomic-test-net:
-        aliases: 
-          - kafka_svc:9092
-      # - jojonomic-test-net
+    - jojonomic-test-net
 
 networks:
   jojonomic-test-net:

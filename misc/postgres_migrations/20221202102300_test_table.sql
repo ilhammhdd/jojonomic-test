@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS test_table(
+  id BIGSERIAL NOT NULL PRIMARY KEY,
+  description TEXT
+);
