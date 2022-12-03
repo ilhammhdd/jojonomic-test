@@ -17,14 +17,14 @@ type ValueByteConverter[T any] interface {
 }
 
 func Produce[T any](topic string, val *T, valConv ValueByteConverter[T]) (string, error) {
-	producer, err := sarama.NewSyncProducer([]string{ENV["KAFKA_BROKER"]}, nil)
+	producer, err := sarama.NewSyncProducer([]string{ENV[ENV_KAFKA_BROKER]}, KafkaClientConfig)
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 		return "", err
 	}
 	defer func() {
 		if err := producer.Close(); err != nil {
-			log.Fatalln(err)
+			log.Println(err)
 		}
 	}()
 

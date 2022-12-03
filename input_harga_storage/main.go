@@ -1,20 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
-	"github.com/gorilla/mux"
+	"github.com/Shopify/sarama"
+	"github.com/ilhammhdd/jojonomic_test/utils"
 )
 
+func init() {
+	utils.SetupUtils("input_harga_storage")
+}
+
 func main() {
-	fmt.Println("hello input_harga_storage")
-	r := mux.NewRouter()
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("hello input_harga_storage"))
-	})
-	server := http.Server{Addr: ":9998", Handler: r}
-	defer server.Close()
-	server.ListenAndServe()
+	msgChan := make(chan *sarama.ConsumerMessage)
+	utils.GoReceiveConsumerMsg(msgChan, HandleInputHarga)
+	utils.Consume("input-harga", 0, sarama.OffsetNewest, msgChan)
 }

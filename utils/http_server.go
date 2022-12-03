@@ -17,7 +17,7 @@ func StartServerMux(r http.Handler) {
 	flag.Parse()
 
 	server := http.Server{
-		Addr:         fmt.Sprintf(":%s", ENV["PORT"]),
+		Addr:         fmt.Sprintf(":%s", ENV[ENV_PORT]),
 		Handler:      r,
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
