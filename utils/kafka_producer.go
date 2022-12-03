@@ -45,3 +45,43 @@ func Produce[T any](topic string, val *T, valConv ValueByteConverter[T]) (string
 	}
 	return key, nil
 }
+
+type Production[T any] struct {
+	Topic        string
+	Val          *T
+	ValConv      ValueByteConverter[T]
+	syncProducer sarama.SyncProducer
+}
+
+func NewProduction[T any](topic string, val *T, valConv ValueByteConverter[T]) (Production[T], error) {
+	producer, err := sarama.NewSyncProducer([]string{ENV[ENV_KAFKA_BROKER]}, KafkaClientConfig)
+	if err != nil {
+		log.Println(err)
+		return Production[T]{}, err
+	}
+
+	return Production[T]{Topic: topic, Val: val, ValConv: valConv, syncProducer: producer}, nil
+}
+
+func (p Production[T]) Prepare() (string, []byte, error) {
+	key, err := SID.Generate()
+	if err != nil {
+		return "", nil, err
+	}
+	valBytes, err := p.ValConv.ConvertToByteValue(p.Val)
+	if err != nil {
+		return "", nil, err
+	}
+
+	return key, valBytes, nil
+}
+
+func (p Production[T]) Produce(key string, valBytes []byte) error {
+	msg := &sarama.ProducerMessage{Topic: p.Topic, Key: sarama.StringEncoder(key), Value: sarama.ByteEncoder(valBytes)}
+	_, _, err := p.syncProducer.SendMessage(msg)
+	if err != nil {
+		log.Printf("FAILED to send message: %s\n", err)
+		return err
+	}
+	return nil
+}

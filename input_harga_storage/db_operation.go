@@ -8,11 +8,14 @@ import (
 	"github.com/ilhammhdd/jojonomic_test/utils"
 )
 
-func InsertHarga(harga *model.Harga) error {
-	cmdTag, err := utils.PGPool.Exec(context.Background(), "INSERT INTO harga (admin_id,topup,buyback) VALUES($1,$2,$3);", harga.AdminID, harga.Topup, harga.Buyback)
-	if err != nil {
-		log.Println(cmdTag.String(), err)
-		return err
+func InsertHarga(harga *model.Harga) (int64, error) {
+	row := utils.PGPool.QueryRow(context.Background(), "INSERT INTO harga (admin_id,topup,buyback) VALUES($1,$2,$3) RETURNING id", harga.AdminID, harga.Topup, harga.Buyback)
+
+	var lastInsertedID int64
+	if err := row.Scan(&lastInsertedID); err != nil {
+		log.Println(err)
+		return -1, err
 	}
-	return nil
+
+	return lastInsertedID, nil
 }

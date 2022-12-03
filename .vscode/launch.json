@@ -27,6 +27,22 @@
       "mode": "debug",
       "cwd": "${workspaceFolder}\\input_harga_storage",
       "program": "${workspaceFolder}\\input_harga_storage",
+    },
+    {
+      "name": "cek_harga",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "cwd": "${workspaceFolder}\\cek_harga",
+      "program": "${workspaceFolder}\\cek_harga",
+    },
+    {
+      "name": "topup",
+      "type": "go",
+      "request": "launch",
+      "mode": "debug",
+      "cwd": "${workspaceFolder}\\topup",
+      "program": "${workspaceFolder}\\topup",
     }
   ]
 }

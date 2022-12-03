@@ -8,12 +8,12 @@ import (
 )
 
 func init() {
-	utils.SetupUtils("cek-harga")
+	utils.SetupUtils("topup")
 	utils.OpenDBConnection()
 }
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/api/check-harga", HandleCekHarga).Methods(http.MethodGet)
+	r.HandleFunc("/api/topup", HandleTopup).Methods(http.MethodPost)
 	utils.StartServerMux(r)
 }

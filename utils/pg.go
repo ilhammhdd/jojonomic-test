@@ -8,8 +8,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func OpenConnection(host, port, user, password, dbname string) {
-	conn, err := pgxpool.New(context.Background(), fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s", host, port, user, password, dbname))
+func OpenDBConnection() {
+	conn, err := pgxpool.New(context.Background(), fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s", ENV[ENV_DB_HOST], ENV[ENV_DB_PORT], ENV[ENV_DB_USER], ENV[ENV_DB_PASSWORD], ENV[ENV_DB_DBNAME]))
 	if err != nil {
 		log.Println(err)
 		return

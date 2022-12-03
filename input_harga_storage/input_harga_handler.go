@@ -15,8 +15,9 @@ func HandleInputHarga(consMsg *sarama.ConsumerMessage) {
 		log.Println(err)
 		return
 	}
-	err = InsertHarga(&harga)
+	lastInsertedID, err := InsertHarga(&harga)
 	if err != nil {
 		log.Println(err)
 	}
+	lastInsertedHargaID.ID = lastInsertedID
 }

@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"log"
 	"net/http"
 	"strings"
 
@@ -13,8 +12,7 @@ import (
 
 func HandleInputHarga(w http.ResponseWriter, r *http.Request) {
 	reqBody, err := utils.ReadRequestBodyJSON[Request](r)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+	if utils.IsNotNilAndWriteErrResp(http.StatusBadRequest, &w, err) {
 		return
 	}
 
@@ -29,29 +27,20 @@ func HandleInputHarga(w http.ResponseWriter, r *http.Request) {
 		errMsgs = append(errMsgs, "harga_buyback must be > 0")
 	}
 	if len(errMsgs) > 0 {
-		w.WriteHeader(http.StatusBadRequest)
-		response := model.ResponseTmpl{IsError: true, Error: errors.New(strings.Join(errMsgs, ", "))}
-		responseJSON, err := json.Marshal(response)
-		if err != nil {
-			log.Println(err.Error())
+		err = errors.New(strings.Join(errMsgs, ", "))
+		if utils.IsNotNilAndWriteErrResp(http.StatusBadRequest, &w, err) {
 			return
 		}
-		w.Write(responseJSON)
-		return
 	}
 
 	key, err := utils.Produce[Request]("input-harga", reqBody, utils.ValueByteConverterFunc[Request](ValueByteConvertion))
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
+	if utils.IsNotNilAndWriteErrResp(http.StatusInternalServerError, &w, err) {
 		return
 	}
 
 	response := model.ResponseTmpl{IsError: false, ReffID: key}
 	responseJSON, err := json.Marshal(response)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		log.Println(err.Error())
+	if utils.IsNotNilAndWriteErrResp(http.StatusInternalServerError, &w, err) {
 		return
 	}
 

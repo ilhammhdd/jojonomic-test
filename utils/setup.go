@@ -12,13 +12,14 @@ import (
 )
 
 const (
-	ENV_PORT         = "PORT"
-	ENV_KAFKA_BROKER = "KAFKA_BROKER"
-	ENV_DB_HOST      = "DB_HOST"
-	ENV_DB_PORT      = "DB_PORT"
-	ENV_DB_USER      = "DB_USER"
-	ENV_DB_PASSWORD  = "DB_PASSWORD"
-	ENV_DB_DBNAME    = "DB_DBNAME"
+	ENV_PORT                     = "PORT"
+	ENV_KAFKA_BROKER             = "KAFKA_BROKER"
+	ENV_DB_HOST                  = "DB_HOST"
+	ENV_DB_PORT                  = "DB_PORT"
+	ENV_DB_USER                  = "DB_USER"
+	ENV_DB_PASSWORD              = "DB_PASSWORD"
+	ENV_DB_DBNAME                = "DB_DBNAME"
+	ENV_INPUT_HARGA_STORAGE_HOST = "INPUT_HARGA_STORAGE_HOST"
 )
 
 var ENV map[string]string
@@ -47,5 +48,4 @@ func SetupUtils(clientID string) {
 		log.Fatalln("Error loading .env file")
 	}
 	InitKafkaClientConfig(clientID)
-	OpenConnection(ENV[ENV_DB_HOST], ENV[ENV_DB_PORT], ENV[ENV_DB_USER], ENV[ENV_DB_PASSWORD], ENV[ENV_DB_DBNAME])
 }
