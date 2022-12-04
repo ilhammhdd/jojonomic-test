@@ -1,0 +1,69 @@
+{
+	"error": false,
+	"data": [
+		{
+			"date": 1670124572,
+			"type": "topup",
+			"gram": 4.003,
+			"harga_topup": 200,
+			"harga_buyback": 20,
+			"saldo": 4.003
+		},
+		{
+			"date": 1670124603,
+			"type": "topup",
+			"gram": 0.997,
+			"harga_topup": 200,
+			"harga_buyback": 20,
+			"saldo": 5
+		},
+		{
+			"date": 1670124975,
+			"type": "topup",
+			"gram": 0.001,
+			"harga_topup": 201,
+			"harga_buyback": 21,
+			"saldo": 5.001
+		},
+		{
+			"date": 1670127600,
+			"type": "topup",
+			"gram": 0.999,
+			"harga_topup": 201,
+			"harga_buyback": 21,
+			"saldo": 6
+		},
+		{
+			"date": 1670127617,
+			"type": "topup",
+			"gram": 0.001,
+			"harga_topup": 201,
+			"harga_buyback": 21,
+			"saldo": 6.001
+		},
+		{
+			"date": 1670127674,
+			"type": "topup",
+			"gram": 100,
+			"harga_topup": 201,
+			"harga_buyback": 21,
+			"saldo": 106.001
+		},
+		{
+			"date": 1670127687,
+			"type": "topup",
+			"gram": 0.001,
+			"harga_topup": 201,
+			"harga_buyback": 21,
+			"saldo": 106.002
+		},
+		{
+			"date": 1670127861,
+			"type": "topup",
+			"gram": 0.001,
+			"harga_topup": 205,
+			"harga_buyback": 21,
+			"saldo": 106.003
+		}
+	]
+}

@@ -50,3 +50,16 @@ func (rt *ResponseTmpl) UnmarshalJSON(jsonData []byte) error {
 	}
 	return nil
 }
+
+func NewResponseTmplJSON(isError bool, reffID string, err error, data any) ([]byte, error) {
+	respTmpl := ResponseTmpl{IsError: isError, ReffID: reffID, Error: err}
+	if data != nil {
+		respTmpl.Data = data
+	}
+
+	respTmplJSON, err := json.Marshal(respTmpl)
+	if err != nil {
+		return nil, err
+	}
+	return respTmplJSON, nil
+}

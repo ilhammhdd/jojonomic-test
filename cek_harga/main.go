@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	utils.SetupUtils("cek-harga")
+	utils.SetupUtils("cek_harga")
 	utils.OpenDBConnection()
 }
 

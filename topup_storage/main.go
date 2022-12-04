@@ -19,7 +19,6 @@ func main() {
 	msgChan := make(chan *sarama.ConsumerMessage)
 	go func() {
 		for msg := range msgChan {
-			log.Println(string(msg.Value))
 			var txWithRel model.TransaksiWithRel
 			err := json.Unmarshal(msg.Value, &txWithRel)
 			if err != nil {
@@ -27,7 +26,7 @@ func main() {
 				continue
 			}
 
-			err = HandleTransaksi(&txWithRel, TopupDBOperator{PGXPool: utils.PGPool, Ctx: context.Background()})
+			err = HandleTransaksi(&txWithRel, TopupDBOperator{Ctx: context.Background()})
 			if err != nil {
 				log.Println(err)
 			}

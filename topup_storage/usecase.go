@@ -29,7 +29,7 @@ func HandleTransaksi(txWithRel *model.TransaksiWithRel, dbo DBOperator) error {
 		}
 	}
 
-	rek.Saldo = utils.AddWithDecimalPlaces(3, rek.Saldo, txWithRel.Transaksi.Gram)
+	rek.Saldo = utils.AddFloats(rek.Saldo, txWithRel.Transaksi.Gram)
 	if !utils.CheckMaxDecimalPlaces(3, rek.Saldo) {
 		return ErrFinalBalanceNotFulfill
 	}

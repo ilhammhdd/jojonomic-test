@@ -2,6 +2,7 @@ package cek_harga_mod
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"time"
@@ -9,6 +10,8 @@ import (
 	"github.com/ilhammhdd/jojonomic_test/model"
 	"github.com/ilhammhdd/jojonomic_test/utils"
 )
+
+var ErrNoPriceExists = errors.New("no price exists")
 
 func CekHarga() (*model.Harga, error) {
 	harga, err := SelectLatestHarga()
@@ -19,6 +22,10 @@ func CekHarga() (*model.Harga, error) {
 	lastInsertedHargaID, err := getLastInsertedHargaID()
 	if err != nil {
 		return nil, err
+	}
+
+	if harga == nil && lastInsertedHargaID == -1 {
+		return nil, ErrNoPriceExists
 	}
 
 	if lastInsertedHargaID != -1 && lastInsertedHargaID > harga.ID {

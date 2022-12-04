@@ -14,6 +14,6 @@ func init() {
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/api/topup", HandleTopup).Methods(http.MethodPost)
+	r.HandleFunc("/api/topup", HandleTopup).Methods(http.MethodPost).Headers("Content-Type", "application/json")
 	utils.StartServerMux(r)
 }
