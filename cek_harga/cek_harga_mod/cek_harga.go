@@ -11,14 +11,21 @@ import (
 )
 
 func CekHarga() (*model.Harga, error) {
+	harga, err := SelectLatestHarga()
+	if err != nil {
+		return nil, err
+	}
+
 	lastInsertedHargaID, err := getLastInsertedHargaID()
 	if err != nil {
 		return nil, err
 	}
 
-	harga, err := SelectLatestHarga(lastInsertedHargaID)
-	if err != nil {
-		return nil, err
+	if lastInsertedHargaID != -1 && lastInsertedHargaID > harga.ID {
+		harga, err = SelectLastInsertedHarga(lastInsertedHargaID)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return harga, nil

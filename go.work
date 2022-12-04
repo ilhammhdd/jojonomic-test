@@ -9,6 +9,7 @@ use (
 	./input_harga
 	./input_harga_storage
 	./topup
+	./topup_storage
 	./misc_test
 	./model
 	./utils

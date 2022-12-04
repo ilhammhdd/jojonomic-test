@@ -1,6 +1,12 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
+	"log"
+
+	"github.com/Shopify/sarama"
+	"github.com/ilhammhdd/jojonomic_test/model"
 	"github.com/ilhammhdd/jojonomic_test/utils"
 )
 
@@ -10,5 +16,22 @@ func init() {
 }
 
 func main() {
+	msgChan := make(chan *sarama.ConsumerMessage)
+	go func() {
+		for msg := range msgChan {
+			log.Println(string(msg.Value))
+			var txWithRel model.TransaksiWithRel
+			err := json.Unmarshal(msg.Value, &txWithRel)
+			if err != nil {
+				log.Println(err)
+				continue
+			}
 
+			err = HandleTransaksi(&txWithRel, TopupDBOperator{PGXPool: utils.PGPool, Ctx: context.Background()})
+			if err != nil {
+				log.Println(err)
+			}
+		}
+	}()
+	utils.Consume("topup", 0, sarama.OffsetNewest, msgChan)
 }

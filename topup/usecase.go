@@ -8,6 +8,8 @@ import (
 	"github.com/ilhammhdd/jojonomic_test/utils"
 )
 
+var ErrPriceDoesntMatch = errors.New("price doesn't match current topup price")
+
 func Topup(reqBody *model.TopupRequest) (string, error) {
 	harga, err := cek_harga_mod.CekHarga()
 	if err != nil {
@@ -15,7 +17,7 @@ func Topup(reqBody *model.TopupRequest) (string, error) {
 	}
 
 	if reqBody.Harga != harga.Topup {
-		return "", errors.New("price doesn't match current topup price")
+		return "", ErrPriceDoesntMatch
 	}
 
 	transaksiWithRel := model.TransaksiWithRel{Transaksi: &model.Transaksi{Gram: reqBody.Gram, Type: model.TransaksiType_TOPUP, HargaID: harga.ID}, Harga: harga, Rekening: &model.Rekening{Norek: reqBody.NoRek}}

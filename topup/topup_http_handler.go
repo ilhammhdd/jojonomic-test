@@ -22,7 +22,12 @@ func HandleTopup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	key, err := Topup(reqBody)
-	if utils.IsNotNilAndWriteErrResp(http.StatusInternalServerError, &w, err) {
+	if err != nil {
+		if err == ErrPriceDoesntMatch {
+			utils.IsNotNilAndWriteErrResp(http.StatusBadRequest, &w, err)
+		} else {
+			utils.IsNotNilAndWriteErrResp(http.StatusInternalServerError, &w, err)
+		}
 		return
 	}
 
