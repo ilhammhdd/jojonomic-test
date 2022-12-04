@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"log"
+	"strings"
 
 	"github.com/Shopify/sarama"
 	"github.com/ilhammhdd/jojonomic_test/model"
@@ -19,6 +20,9 @@ func main() {
 	msgChan := make(chan *sarama.ConsumerMessage)
 	go func() {
 		for msg := range msgChan {
+			if !strings.Contains(string(msg.Key), "topup") {
+				continue
+			}
 			var txWithRel model.TransaksiWithRel
 			err := json.Unmarshal(msg.Value, &txWithRel)
 			if err != nil {

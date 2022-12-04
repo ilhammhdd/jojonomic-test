@@ -96,9 +96,12 @@ func SubtractFloats(a, b float64) float64 {
 			if fracX[i] > 0 && fracX[i] < fracY[i] {
 				xx = 10 + fracX[i] - carry
 				carry = 1
-			} else if fracX[i] > 0 && fracX[i] >= fracY[i] {
+			} else if fracX[i] > 0 && fracX[i]-carry >= fracY[i] {
 				xx = fracX[i] - carry
 				carry = 0
+			} else if fracX[i] > 0 && fracX[i]-carry < fracY[i] {
+				xx = 10 + fracX[i] - carry
+				carry = 1
 			} else if fracX[i] == 0 {
 				xx = 10 + fracX[i] - carry
 				carry = 1

@@ -1,7 +1,9 @@
 package utils
 
 import (
+	"fmt"
 	"log"
+	"strings"
 
 	"github.com/Shopify/sarama"
 )
@@ -16,7 +18,7 @@ type ValueByteConverter[T any] interface {
 	ConvertToByteValue(t *T) ([]byte, error)
 }
 
-func Produce[T any](topic string, val *T, valConv ValueByteConverter[T]) (string, error) {
+func Produce[T any](topic string, val *T, valConv ValueByteConverter[T], keyPrefix ...string) (string, error) {
 	producer, err := sarama.NewSyncProducer([]string{ENV[ENV_KAFKA_BROKER]}, KafkaClientConfig)
 	if err != nil {
 		log.Println(err)
@@ -32,6 +34,7 @@ func Produce[T any](topic string, val *T, valConv ValueByteConverter[T]) (string
 	if err != nil {
 		return "", err
 	}
+	key = fmt.Sprintf("%s%s", strings.Join(keyPrefix, ""), key)
 	valByte, err := valConv.ConvertToByteValue(val)
 	if err != nil {
 		return "", err

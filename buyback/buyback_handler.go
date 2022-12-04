@@ -10,7 +10,7 @@ import (
 	"github.com/ilhammhdd/jojonomic_test/utils"
 )
 
-func HandleTopup(w http.ResponseWriter, r *http.Request) {
+func HandleBuyback(w http.ResponseWriter, r *http.Request) {
 	reqBody, err := utils.ReadRequestBodyJSON[model.TransaksiRequest](r)
 	if utils.IsNotNilAndWriteErrResp(http.StatusBadRequest, &w, err) {
 		return
@@ -21,13 +21,18 @@ func HandleTopup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	key, err := Topup(reqBody)
-	if err != nil {
-		if err == ErrPriceDoesntMatch {
-			utils.IsNotNilAndWriteErrResp(http.StatusBadRequest, &w, err)
-		} else {
-			utils.IsNotNilAndWriteErrResp(http.StatusInternalServerError, &w, err)
+	key, err := Buyback(reqBody)
+	if err != nil && err == ErrPriceDoesntMatch || err == ErrBalanceInsufficient {
+		respBodyJSON, err1 := model.NewResponseTmplJSON(true, key, err, nil)
+		if err1 != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
 		}
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write(respBodyJSON)
+		return
+	} else if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 

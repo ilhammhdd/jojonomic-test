@@ -43,6 +43,7 @@ var subtractFloatsCases [][]float64 = [][]float64{
 	{0.001, 0.999, -0.998},
 	{31.143, 25.856, 5.287},
 	{76.871, 892.984, -816.113},
+	{13.726, 0.727, 12.999},
 }
 
 func TestSubtractFloats(t *testing.T) {

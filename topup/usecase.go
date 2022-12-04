@@ -10,7 +10,7 @@ import (
 
 var ErrPriceDoesntMatch = errors.New("price doesn't match current topup price")
 
-func Topup(reqBody *model.TopupRequest) (string, error) {
+func Topup(reqBody *model.TransaksiRequest) (string, error) {
 	harga, err := cek_harga_mod.CekHarga()
 	if err != nil {
 		return "", err
@@ -21,7 +21,7 @@ func Topup(reqBody *model.TopupRequest) (string, error) {
 	}
 
 	transaksiWithRel := model.TransaksiWithRel{Transaksi: &model.Transaksi{Gram: reqBody.Gram, Type: model.TransaksiType_TOPUP, HargaID: harga.ID}, Harga: harga, Rekening: &model.Rekening{Norek: reqBody.NoRek}}
-	key, err := utils.Produce[model.TransaksiWithRel]("topup", &transaksiWithRel, utils.ValueByteConverterFunc[model.TransaksiWithRel](ConvertToByteVal))
+	key, err := utils.Produce[model.TransaksiWithRel]("topup", &transaksiWithRel, utils.ValueByteConverterFunc[model.TransaksiWithRel](ConvertToByteVal), "topup")
 	if err != nil {
 		return "", err
 	}
